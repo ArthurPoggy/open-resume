@@ -2,57 +2,68 @@
 import { useState } from "react";
 
 const EXAMPLE_JSON = {
-  profile: {
-    name: "Arthur Poggy",
-    email: "arthur@email.com",
-    phone: "(11) 99999-9999",
-    url: "linkedin.com/in/arthur",
-    summary:
-      "Desenvolvedor full-stack com experiência em React, Node.js e TypeScript.",
-    location: "São Paulo, Brasil",
-  },
-  workExperiences: [
-    {
-      company: "Empresa Exemplo",
-      jobTitle: "Desenvolvedor Full-Stack",
-      date: "Jan 2022 - Presente",
-      descriptions: [
-        "Desenvolveu e manteve aplicações web usando React e Node.js",
-        "Reduziu o tempo de carregamento em 40% com otimizações de performance",
-      ],
+  resume: {
+    profile: {
+      name: "Arthur Poggy",
+      email: "arthur@email.com",
+      phone: "(11) 99999-9999",
+      url: "linkedin.com/in/arthur",
+      summary:
+        "Desenvolvedor full-stack com experiência em React, Node.js e TypeScript.",
+      location: "São Paulo, Brasil",
     },
-  ],
-  educations: [
-    {
-      school: "Universidade Exemplo",
-      degree: "Bacharelado em Ciência da Computação",
-      date: "2018 - 2022",
-      gpa: "3.8",
+    workExperiences: [
+      {
+        company: "Empresa Exemplo",
+        jobTitle: "Desenvolvedor Full-Stack",
+        date: "Jan 2022 - Presente",
+        descriptions: [
+          "Desenvolveu e manteve aplicações web usando React e Node.js",
+          "Reduziu o tempo de carregamento em 40% com otimizações de performance",
+        ],
+      },
+    ],
+    educations: [
+      {
+        school: "Universidade Exemplo",
+        degree: "Bacharelado em Ciência da Computação",
+        date: "2018 - 2022",
+        gpa: "3.8",
+        descriptions: [],
+      },
+    ],
+    projects: [
+      {
+        project: "Projeto Open Source",
+        date: "2023",
+        descriptions: [
+          "Criou uma biblioteca TypeScript com mais de 500 estrelas no GitHub",
+        ],
+      },
+    ],
+    skills: {
+      featuredSkills: [
+        { skill: "React", rating: 5 },
+        { skill: "TypeScript", rating: 4 },
+        { skill: "Node.js", rating: 4 },
+        { skill: "SQL", rating: 3 },
+        { skill: "Docker", rating: 3 },
+        { skill: "Git", rating: 5 },
+      ],
+      descriptions: ["Experiência com metodologias ágeis (Scrum, Kanban)"],
+    },
+    custom: {
       descriptions: [],
     },
-  ],
-  projects: [
-    {
-      project: "Projeto Open Source",
-      date: "2023",
-      descriptions: [
-        "Criou uma biblioteca TypeScript com mais de 500 estrelas no GitHub",
-      ],
-    },
-  ],
-  skills: {
-    featuredSkills: [
-      { skill: "React", rating: 5 },
-      { skill: "TypeScript", rating: 4 },
-      { skill: "Node.js", rating: 4 },
-      { skill: "SQL", rating: 3 },
-      { skill: "Docker", rating: 3 },
-      { skill: "Git", rating: 5 },
-    ],
-    descriptions: ["Experiência com metodologias ágeis (Scrum, Kanban)"],
   },
-  custom: {
-    descriptions: [],
+  settings: {
+    formToShow: {
+      workExperiences: true,
+      educations: true,
+      projects: true,   // mude para false para esconder Projects
+      skills: true,
+      custom: false,
+    },
   },
 };
 
@@ -77,10 +88,17 @@ export default function JsonToPdfPage() {
     }
 
     try {
+      const body =
+        parsed !== null &&
+        typeof parsed === "object" &&
+        "resume" in (parsed as object)
+          ? parsed
+          : { resume: parsed };
+
       const res = await fetch("/api/generate-pdf", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ resume: parsed }),
+        body: JSON.stringify(body),
       });
 
       if (!res.ok) {
@@ -166,7 +184,7 @@ export default function JsonToPdfPage() {
             setStatus("idle");
             setErrorMsg("");
           }}
-          placeholder={`Cole aqui o JSON do currículo...\n\nExemplo de estrutura:\n{\n  "profile": { "name": "...", "email": "...", ... },\n  "workExperiences": [...],\n  "educations": [...],\n  "projects": [...],\n  "skills": { "featuredSkills": [...], "descriptions": [...] },\n  "custom": { "descriptions": [...] }\n}`}
+          placeholder={`Cole aqui o JSON do currículo...\n\nFormato esperado:\n{\n  "resume": { "profile": {...}, "workExperiences": [...], ... },\n  "settings": { "formToShow": { "projects": false, ... } }  // opcional\n}\n\nOu clique em "Carregar exemplo" para ver a estrutura completa.`}
           className="h-[420px] w-full resize-none rounded-b-none p-4 font-mono text-sm text-gray-800 outline-none placeholder:text-gray-400"
           spellCheck={false}
         />
@@ -242,47 +260,63 @@ export default function JsonToPdfPage() {
           Ver estrutura completa do JSON
         </summary>
         <pre className="overflow-x-auto px-4 pb-4 pt-2 text-xs text-gray-600 leading-relaxed">
-          {`{
-  "profile": {
-    "name": "string",
-    "email": "string",
-    "phone": "string",
-    "url": "string",       // LinkedIn, GitHub, portfólio
-    "summary": "string",
-    "location": "string"
-  },
-  "workExperiences": [
-    {
-      "company": "string",
-      "jobTitle": "string",
-      "date": "string",    // Ex: "Jan 2020 - Dez 2021"
-      "descriptions": ["string"]
-    }
-  ],
-  "educations": [
-    {
-      "school": "string",
-      "degree": "string",
-      "date": "string",
-      "gpa": "string",
-      "descriptions": ["string"]
-    }
-  ],
-  "projects": [
-    {
-      "project": "string",
-      "date": "string",
-      "descriptions": ["string"]
-    }
-  ],
-  "skills": {
-    "featuredSkills": [
-      { "skill": "string", "rating": 1-5 }  // máx 6 itens
+          {`// Formato completo (com settings opcionais):
+{
+  "resume": {
+    "profile": {
+      "name": "string",
+      "email": "string",
+      "phone": "string",
+      "url": "string",       // LinkedIn, GitHub, portfólio
+      "summary": "string",
+      "location": "string"
+    },
+    "workExperiences": [
+      {
+        "company": "string",
+        "jobTitle": "string",
+        "date": "string",    // Ex: "Jan 2020 - Dez 2021"
+        "descriptions": ["string"]
+      }
     ],
-    "descriptions": ["string"]
+    "educations": [
+      {
+        "school": "string",
+        "degree": "string",
+        "date": "string",
+        "gpa": "string",
+        "descriptions": ["string"]
+      }
+    ],
+    "projects": [
+      {
+        "project": "string",
+        "date": "string",
+        "descriptions": ["string"]
+      }
+    ],
+    "skills": {
+      "featuredSkills": [
+        { "skill": "string", "rating": 1-5 }  // máx 6 itens
+      ],
+      "descriptions": ["string"]
+    },
+    "custom": {
+      "descriptions": ["string"]
+    }
   },
-  "custom": {
-    "descriptions": ["string"]
+  "settings": {             // opcional — omitir usa os padrões
+    "themeColor": "#38bdf8", // cor do cabeçalho (hex)
+    "fontFamily": "Roboto",  // Roboto, Lato, Montserrat, etc.
+    "fontSize": "11",        // tamanho base em pt (8–11)
+    "documentSize": "Letter", // "Letter" ou "A4"
+    "formToShow": {
+      "workExperiences": true,
+      "educations": true,
+      "projects": true,      // false = esconde a seção Projects
+      "skills": true,
+      "custom": false
+    }
   }
 }`}
         </pre>

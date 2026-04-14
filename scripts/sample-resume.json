@@ -1,0 +1,100 @@
+{
+  "resume": {
+    "profile": {
+      "name": "Arthur Hammond Aragão Poggy",
+      "email": "arthur.poggy2005@gmail.com",
+      "phone": "+55 21 97133-4603",
+      "url": "linkedin.com/in/arthur-poggy-315841278",
+      "summary": "Bilingual Computer Science student (PUC-Rio) with native Brazilian Portuguese and fluent English, and hands-on experience evaluating LLM outputs, designing prompts, and validating AI-generated content across medical, legal, and research contexts. Strong analytical and writing skills with deep familiarity with ChatGPT, Claude, and Gemini.",
+      "location": "Rio de Janeiro, Brazil"
+    },
+    "workExperiences": [
+      {
+        "company": "True Auditoria Médica",
+        "jobTitle": "AI Engineer",
+        "date": "Feb 2025 - Jul 2025",
+        "descriptions": [
+          "Developed and refined prompts in Portuguese and English for LLM pipelines processing medical documents — ensuring accuracy, fluency, and contextual relevance of AI-generated outputs",
+          "Evaluated model responses for semantic correctness and cultural alignment, iterating on prompt design to reduce hallucinations and improve output reliability",
+          "Documented prompt strategies, evaluation criteria, and quality standards for team-wide consistency"
+        ]
+      },
+      {
+        "company": "Light Energia",
+        "jobTitle": "Software & AI Developer",
+        "date": "2025 - Present",
+        "descriptions": [
+          "Designed and validated Portuguese-language prompts for Google Gemini agent generating legal defense documents — assessing outputs against source judicial records for accuracy and cultural correctness",
+          "Built evaluation scripts to audit AI-generated content quality, comparing model outputs against expected results and defining rubrics for consistent assessment"
+        ]
+      },
+      {
+        "company": "Revistaft",
+        "jobTitle": "Academic Journal Reviewer and Editor",
+        "date": "Nov 2022 - Present",
+        "descriptions": [
+          "Reviewed and edited academic manuscripts in Portuguese and English, assessing linguistic quality, coherence, and contextual accuracy",
+          "Provided structured written feedback aligned with publication standards — developing strong analytical and critical writing skills in both languages"
+        ]
+      }
+    ],
+    "educations": [
+      {
+        "school": "Pontifícia Universidade Católica do Rio de Janeiro — PUC-Rio",
+        "degree": "B.Sc. Computer Science",
+        "date": "2023 - 2027",
+        "gpa": "",
+        "descriptions": [
+          "Full scholarship — Behring Foundation"
+        ]
+      }
+    ],
+    "projects": [],
+    "skills": {
+      "featuredSkills": [
+        { "skill": "Portuguese (Native)", "rating": 5 },
+        { "skill": "English (Fluent)", "rating": 5 },
+        { "skill": "Prompt Engineering", "rating": 5 },
+        { "skill": "LLM Evaluation", "rating": 5 },
+        { "skill": "Analytical Writing", "rating": 4 },
+        { "skill": "AI Tools (Claude, Gemini, ChatGPT)", "rating": 5 }
+      ],
+      "descriptions": [
+        "Languages: Portuguese (native, Brazil), English (fluent — written and verbal)",
+        "LLM & AI: Prompt design, output evaluation, rubric creation, hallucination mitigation, ChatGPT, Claude, Gemini",
+        "Writing & Editorial: Academic manuscript review, structured feedback, content quality assessment, bilingual writing",
+        "Tools: Python, Git, Google Workspace, remote collaboration platforms"
+      ]
+    },
+    "custom": {
+      "descriptions": []
+    }
+  },
+  "settings": {
+    "themeColor": "#059669",
+    "fontFamily": "Roboto",
+    "fontSize": "11",
+    "documentSize": "A4",
+    "formToShow": {
+      "workExperiences": true,
+      "educations": true,
+      "projects": false,
+      "skills": true,
+      "custom": false
+    },
+    "formToHeading": {
+      "workExperiences": "WORK EXPERIENCE",
+      "educations": "EDUCATION",
+      "projects": "PROJECTS",
+      "skills": "SKILLS",
+      "custom": "CUSTOM SECTION"
+    },
+    "formsOrder": ["workExperiences", "educations", "skills", "projects", "custom"],
+    "showBulletPoints": {
+      "educations": true,
+      "projects": true,
+      "skills": true,
+      "custom": true
+    }
+  }
+}
